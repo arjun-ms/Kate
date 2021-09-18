@@ -1,9 +1,12 @@
 import speech_recognition as sr
 import pyttsx3 as tts
 import pywhatkit
+import datetime
+import wikipedia
+
 
 # this instance recognises the speech
-kate = sr.Recognizer()
+charlotte = sr.Recognizer()
 # this instance is for initializing speech synthesis
 engine = tts.init()
 
@@ -13,7 +16,7 @@ engine.setProperty('voice',voices[1].id)
 def talk(text):
     engine.say(text)
     engine.runAndWait()
-    # engine.say("I am Kate, your personal assistant")
+    # engine.say("I am charlotte, your personal assistant")
     # engine.say("What can I do for you")
 
 def take_command():
@@ -21,11 +24,11 @@ def take_command():
         with sr.Microphone() as source :
             talk("Listening now")
             print("Listening...")
-            voice = kate.listen(source)
-            command = kate.recognize_google(voice)
+            voice = charlotte.listen(source)
+            command = charlotte.recognize_google(voice)
             command = command.lower()
             print(command)       
-            if "hello" and "kate" in command:
+            if "hello" and "charlotte" in command:
                 print("What can I do for you")
                 talk("What can I do for you")
                 
@@ -43,7 +46,7 @@ def listToString(s):
     # return string  
     return (str1.join(s))
 
-def run_kate():
+def run_charlotte():
     command = take_command()
     if "play" in command:
         song = command.split(" ")[1:]
@@ -52,5 +55,16 @@ def run_kate():
         talk("Playing "+song)
         print("Playing "+song)
         pywhatkit.playonyt(song)
+    elif "time" in command:
+        time = datetime.datetime.now().strftime("%H:%M")
+        print("Current time is "+time)
+        talk("Current time is "+time)
+    elif "who is" in command:
+        person = command.replace("who is","")
+        info = wikipedia.summary(person, 1)
+        print(info)
+        talk(info)
+    elif "how are you" in command:
+        talk("I am doing great. What about you?")
 
-run_kate()
+run_charlotte()
