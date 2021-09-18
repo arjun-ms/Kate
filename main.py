@@ -1,5 +1,6 @@
 import speech_recognition as sr
 import pyttsx3 as tts
+import pywhatkit
 
 # this instance recognises the speech
 kate = sr.Recognizer()
@@ -27,7 +28,7 @@ def take_command():
             if "hello" and "kate" in command:
                 print("What can I do for you")
                 talk("What can I do for you")
-                take_command()
+                
             
     except:
         pass
@@ -47,8 +48,9 @@ def run_kate():
     if "play" in command:
         song = command.split(" ")[1:]
         song = listToString(song)
-        print(song)
+        # print(song)
         talk("Playing "+song)
         print("Playing "+song)
+        pywhatkit.playonyt(song)
 
 run_kate()
